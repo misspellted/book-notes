@@ -1,0 +1,156 @@
+The past contains the trials, tribulations, tears, and triumphs of others
+facing the same or similar problem(s) facing you.
+
+Patterns are experience reuse, not code reuse.
+
+Inheritance is good for code reuse, but may not good during maintenance.
+
+Shorter release cycles may indicate inheritance nightmare ahead.
+
+If not all subclasses will have the same behavior, inheritance isn't the right
+answer.
+
+==
+
+Change is the one constant in software development.
+
+The software must change over time, otherise it faces extinction.
+
+[design principle]
+Identify the aspects of the software that vary, and separate them from what
+stays the same.
+
+[in other words]
+Encapsulate the dynamic for alteration or extension without affecting the
+static.
+
+This principle forms the basis for nearly all patterns: patterns allow system
+component variation independently of others.
+
+==
+
+[exercise, using the diagram on page 4]
+problem: rubber ducks don't fly.
+questions: what's static? what's dynamic?
+answers:
+  -  swim() is static
+  -  quack() is dynamic
+  -  display() is dynamic (also specific)
+  -  fly() is dynamic
+
+isolate:
+  -  fly() -> set of Flyable behaviors
+  -  quack() -> set of Quackable behaviors
+
+static:
+  -  swim() -> swim is generic
+  -  display() -> display() is already isolated to subclasses.
+
+==
+
+Having the variation encapsulated yields _assignability_.
+
+The variation can be assigned at design-time, or through appropriate methods,
+at run-time.
+
+[design principle]
+Program to an interface, not an implemetation.
+
+(I've used this expression at times, but I need more practice!)
+
+An interface represents a variation.
+An implementation performs the variation.
+
+[note]
+"interface" here means a contract not the Java _interface_.
+
+In other words, program to the idea of variation, not to the variation.
+
+==
+
+Approaching the problem from these principles, code reuse is attained without
+the headaches of maintenance with inheritance.
+
+The variation is _delegated_ to the implementations while the user of the
+variation fetches little to no updates (once the principles are applied).
+
+[interesting thought]
+In the book (pg. 15), the Duck class' fly() and quack() are renamed. I don't
+like that, as now any customers of the Duck class have to change their classes.
+Since 'delegation' was mentioned why the changes? **
+
+[** Extra note for what I was thinking]
+If the delegation is occuring, delegation of the fly() method, for exampe, does
+not require a rename. Instead, Duck::fly() can just call Flyable::fly():
+
+public class Duck
+{
+    private Flyable flyBehavior;
+
+    ...
+
+    // This allows run-time changes to the flying behavior.
+    // No design-time choices were harmed in the provision of this method.
+    public void setFlyBehavior(Flyable behavior)
+    {
+        this.flyBehavior = behavior;
+    }
+
+    ...
+
+    // The book changes fly() to performFly().
+    // A perfectly good waste of the fly() method.
+    // First of all, performFly() indicates to the outside world that some
+    //   other mechanism is doing the flying, as 'perform' is the prefix here.
+    // That's not delegation, that's defining new behavior.
+    public void performFly()
+    {
+        this.flyBehavior.fly();
+    }
+
+    // This IS delegation (by name and action)!
+    public void fly()
+    {
+        this.flyBehavior.fly();
+    }
+
+    ...
+}
+
+A rename of the public contract of Duck is NOT required for delegation. Imagine
+if every delegated method required a rename. That's not... productive, IMNSHO.
+
+==
+
+These families of behaviors/variations/algorithms can have many names, but
+the concept is important to remember. [AND PRACTICE!]
+
+Relationships between code/classes can be "elementarily" (lol!) described as:
+  -  IS-A (diagram marker: outlined arrow with solid line from base)
+  -  HAS-A (diagram marker: arrow with solid line from peak)
+  -  IMPLEMENTS (diagram marker: outlined arrow with dashed line from base)
+
+Using the HAS-A relationship is _composition_.
+
+[design principle]
+Favor composition over inheritance.
+
+[design pattern]
+Strategy:
+  Defines a family of algorithms, encapsulates each one, and makes them
+    interchangeable, allowing the algorithm to vary independently from users.
+
+(not as "formal" as in the book [pg. 24], but whatever ^_^)
+
+==
+
+Design patterns give way to a shared vocabulary in development, as well as
+elevating architecture thinking to the _pattern_ level, not the nitty-gritty
+_object_ level.
+
+[pg. 27]
+"Just don't get Pattern Fever... you'll know you have it when you start using
+patterns for Hello World..."
+
+_Communicating using patterns conveys_ the names, as well as the _qualities_,
+_characteristics_, and _constraints_ of these patterns.
