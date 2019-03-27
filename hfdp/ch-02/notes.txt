@@ -1,0 +1,80 @@
+Sometimes a requirement to add features comes with skeletons in the closet that
+cannot be cleaned out, or even found. The new changes must deal with the
+explicit and implicit constraints in place.
+
+The previews of the observer pattern were... interesting, slightly obvious in
+their intent, and with a sprinkle of terrible "humor".
+
+[design pattern]
+Observer:
+  Defines a one-to-many relationship betwen objects such that when one object
+    changes state, all of the dependent objects are notified and updated*
+    automatically.
+
+* Is the 'updated' part of the definition required? I don't think so, as the
+notified dependents choose what they do with the updates on the subject object.
+I think the notification portion is sufficient here, but I didn't write the
+definition, so I guess I play along.
+
+==
+
+The observer pattern provides loose coupling.
+
+Loose coupling between objects allows for interactions, but have limited
+knowledge regarding each other.
+
+[design principle]
+Strive for loosely coupled designs between objects that interact.
+
+Loosely coupled designs lead to flexible object-oriented systems that can
+change easily, due to minimized interdependencies between objects.
+
+Frameworks, libraries, modules, et cetera, including built-in variations, of
+the observer pattern can be useful, but may introduce inflexibility.
+
+==
+
+I feel somewhat versed on this pattern, as event-driven approaches use this
+concept very well in separating logic outside visual display, such as in
+graphical user interfaces and visual applications like video games.
+
+Heh, on pg. 58, the code listing is in Java, but before the Streaming API was
+introduced, as the list of observers are notified serially. However, as it is,
+this code is for demonstration, and also needs to be "future-proof", so adding
+the streaming in the example would interfere with that objective.
+
+[editor's note]
+Also, the Streaming API wasn't available, so of course it would be difficult to
+use it. And concurrency isn't the topic of the chapter, although it is kind of
+hinted at later on, in the conversion of the example code to use the built-in
+j.u.Observable framework/API, in that the observer notification order is better
+left unexpected (don't write code that depends on the order of notifications).
+[editor's note concluded]
+
+I did like the push and pull conversation on pg. 62-63.. it had a .. push/pull
+feel to it. A nod to GEB, perhaps? Or am I looking for a connection that isn't
+there? Who knows :)
+
+==
+
+Subjects can _push_ data with notifying observers, or notify observers without
+data, so that the observers need to _pull_ the updated data from the subject.
+
+To use this pattern properly, the order of notifying observers must be allowed
+to be random.
+
+[concern]
+java.util.Observable (j.u.O) is a class, not an interface, which violates the
+design principle of programming to an interface, not an implementation.
+
+[concern]
+As j.u.O is a class, and some methods in it, such as ::setChanged() are of a
+protected level, it needs to be subclassed, which trips at the design principle
+of favoring composition over inheritance.
+
+These two concerns are valid, and need to be considered when deciding to use
+j.u.O versus rolling one's own version of the observer pattern.
+
+==
+
+pg. 73 - Ah, ActionListener, my old Swing friend! How are you? :)
