@@ -1,0 +1,25 @@
+[design principle]
+Classes should be open to extension, but closed for modification.
+
+Think of decorator objects as "wrappers"...
+
+... So why not call it the "Wrapper Pattern"???
+
+Decorators maintain the supertype of the decorated object.
+
+[design pattern]
+Decorator
+  Provides additional dynamic responsibilities to an object,
+  as a flexible alternative to subclassing,
+  for extending functionality.
+
+Um.. what? That's.. the definition? LOL! Very... definitive, I'd say.
+
+java.io is littered... full of decorators.
+
+==--==
+
+Yeah.. that's all the notes I took with this chapter. Not much useful
+information outside all the examples. I feel like this chapter was define-
+by-example, rather than providing examples to extend the information
+presented. Not very.. enlightening, but at least the ideas were conveyed.
